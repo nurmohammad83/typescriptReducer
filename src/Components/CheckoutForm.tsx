@@ -1,6 +1,5 @@
 import { useReducer } from "react"
 
-
 interface IInitialState {
     first_name: string;
     last_name: string;
@@ -9,7 +8,6 @@ interface IInitialState {
     count: number;
     terms: boolean;
 }
-
 
 const initialState:IInitialState ={
     first_name:'Mr. / Mrs.',
@@ -85,7 +83,6 @@ const CheckoutFrom = () => {
       >
         <div className="max-w-xl lg:max-w-3xl">
           
-  
           <form onSubmit={handelSubmit} className="mt-8 grid grid-cols-6 gap-6">
             <div className="col-span-6 sm:col-span-3">
               <label
@@ -201,4 +198,4 @@ const CheckoutFrom = () => {
   </section>
   )
 }
-export default CheckoutFrom
+export default CheckoutFrom;
