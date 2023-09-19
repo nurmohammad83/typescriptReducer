@@ -193,7 +193,7 @@ const CheckoutFrom = () => {
                   className="inline-block shrink-0 rounded-md border  bg-blue-600 px-12 py-3 text-sm font-medium disabled:bg-slate-400 text-white"
                   disabled={!state.terms}
                 >
-                  Create an account
+                  CheckOut
                 </button>
               </div>
             </form>
