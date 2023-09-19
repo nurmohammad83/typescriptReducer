@@ -26,15 +26,15 @@ const CheckoutFrom = () => {
       case "INCREMENT":
         return {
           ...state,
-          count: state.count++,
+          count: state.count + action.payload,
         };
       case "DECREMENT":
-        if (state.count < 0) {
+        if (state.count < 0 || state.count === - 1) {
           state.count = 0;
         }
         return {
           ...state,
-          count: state.count--,
+          count: state.count - action.payload,
         };
       default:
         return state;
@@ -62,6 +62,7 @@ const CheckoutFrom = () => {
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl">
+            <h1 className="text-orange-500 font-bold text-3xl text-center">CHECKOUT</h1>
             <form
               onSubmit={handelSubmit}
               className="mt-8 grid grid-cols-6 gap-6"
@@ -119,7 +120,7 @@ const CheckoutFrom = () => {
                 </label>
 
                 <input
-                  type="email"
+                  type="text"
                   id="Email"
                   name="email"
                   onChange={(e) =>
@@ -162,11 +163,11 @@ const CheckoutFrom = () => {
                 >
                   No of PC's
                 </label>
-                <button onClick={() => dispatch({ type: "DECREMENT" })}>
+                <button onClick={() => dispatch({ type: "DECREMENT" ,payload:1})}>
                   -
                 </button>
                 <p>{state.count}</p>
-                <button onClick={() => dispatch({ type: "INCREMENT" })}>
+                <button onClick={() => dispatch({ type: "INCREMENT",payload:1 })}>
                   +
                 </button>
               </div>

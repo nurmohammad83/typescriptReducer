@@ -7,7 +7,12 @@ export interface IInitialState {
   terms: boolean;
 }
 
-export interface AppAction {
-  type: "INPUT" | "TOGGLE" | "INCREMENT" | "DECREMENT";
-  payload?: { name: string; value: string } | undefined;
+export type AppAction = AppCount | AppInput;
+export interface AppInput {
+  type: "INPUT" | "TOGGLE";
+  payload?: { name: string; value: string };
+}
+export interface AppCount {
+  type: "INCREMENT" | "DECREMENT";
+  payload: number;
 }
