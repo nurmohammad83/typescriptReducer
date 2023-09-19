@@ -1,8 +1,9 @@
+import CheckoutFrom from "./Components/CheckoutFrom"
 
 const App = () => {
   return (
     <div>
-     app
+        <CheckoutFrom />
     </div>
   )
 }
