@@ -1,4 +1,4 @@
-import CheckoutFrom from "./Components/CheckoutFrom"
+import CheckoutFrom from "./Components/CheckoutForm"
 
 const App = () => {
   return (
