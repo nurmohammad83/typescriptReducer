@@ -1,7 +1,9 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { AppAction, IInitialState } from "../interfaces";
+import Modal from "./Modal";
 
 const CheckoutFrom = () => {
+  const [open, setOpen] = useState<boolean>(false);
   const initialState: IInitialState = {
     first_name: "Mr. / Mrs.",
     last_name: "",
@@ -11,7 +13,7 @@ const CheckoutFrom = () => {
     terms: false,
   };
 
-  const reducer = (state: IInitialState, action: AppAction):IInitialState => {
+  const reducer = (state: IInitialState, action: AppAction): IInitialState => {
     switch (action.type) {
       case "INPUT":
         return {
@@ -29,9 +31,12 @@ const CheckoutFrom = () => {
           count: state.count + action.payload,
         };
       case "DECREMENT":
-        if (state.count < 0 || state.count === - 1) {
-          state.count = 0;
-        }
+        if (state.count < 1) {
+          return{
+           ...state,
+           count:0,
+          };
+         }
         return {
           ...state,
           count: state.count - action.payload,
@@ -40,29 +45,32 @@ const CheckoutFrom = () => {
         return state;
     }
   };
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setOpen(!open)
     console.log(state);
   };
   return (
     <section className="bg-white">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section className="relative flex h-32 items-center justify-center bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
-          <div className="text-white text-center space-y-2">
+      <div className="lg:grid">
+        <Modal open={open} onClose={() => setOpen(!open)}>
+          <div className="text-black h-full flex flex-col items-center justify-center text-center space-y-2">
             <h2 className="text-2xl font-semibold text-orange-400">
               Welcome {`${state.first_name} ${state.last_name}`}
             </h2>
             <p>Email: {state.email}</p>
             <p>No of Products: {state.count}</p>
+            <p className="text-xl font-bold pt-4 text-blue-400">Order Created Successfully</p>
           </div>
-        </section>
+        </Modal>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
           <div className="max-w-xl lg:max-w-3xl">
-            <h1 className="text-orange-500 font-bold text-3xl text-center">CHECKOUT</h1>
+            <h1 className="text-blue-500 font-bold text-3xl text-center">
+              CHECKOUT
+            </h1>
             <form
               onSubmit={handelSubmit}
               className="mt-8 grid grid-cols-6 gap-6"
@@ -163,13 +171,17 @@ const CheckoutFrom = () => {
                 >
                   No of PC's
                 </label>
-                <button onClick={() => dispatch({ type: "DECREMENT" ,payload:1})}>
-                  -
-                </button>
+                <span className="cursor-pointer"
+                  onClick={() => dispatch({ type: "DECREMENT", payload: 1 })}
+                >
+                  <span>-</span>
+                </span>
                 <p>{state.count}</p>
-                <button onClick={() => dispatch({ type: "INCREMENT",payload:1 })}>
+                <span className=" cursor-pointer"
+                  onClick={() => dispatch({ type: "INCREMENT", payload: 1 })}
+                >
                   +
-                </button>
+                </span>
               </div>
 
               <div className="col-span-6">
@@ -191,6 +203,7 @@ const CheckoutFrom = () => {
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                 <button
+                 
                   className="inline-block shrink-0 rounded-md border  bg-blue-600 px-12 py-3 text-sm font-medium disabled:bg-slate-400 text-white"
                   disabled={!state.terms}
                 >
